@@ -11,6 +11,7 @@ use App\Mail\VerificationCodeMail;
 
 use Illuminate\Support\Facades\Hash;
 
+
 class AdminController extends Controller
 {
     public function AdminLogout(Request $request)
@@ -65,7 +66,7 @@ class AdminController extends Controller
 
         $data->name= $request->name;
         
-        $data->email= $request->email;
+        
         
         $data->phone= $request->phone;
         

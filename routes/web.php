@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 
+use App\Http\Controllers\Backend\ReviewController;
+
+
 Route::get('/home', function () {
     return view('home.index');
 });
@@ -22,6 +25,28 @@ Route::post('/admin/profile/store', [AdminController::class, 'ProfileStore'])->n
 Route::post('/admin/password/update', [AdminController::class, 'PasswordUpdate'])->name('admin.password.update');
 
 
+
+
+
+});
+
+Route::middleware('auth')->group(function () {
+Route::controller(ReviewController::class)->group(function(){
+Route::get('/all/review','AllReview')->name('all.review');
+
+Route::get('/add/review','AddReview')->name('add.review');
+
+Route::post('/store/review','storeReview')->name('store.review');
+Route::get('/edit/review/{id}','EditReview')->name('edit.review');
+
+Route::post('/update/review','UpdateReview')->name('update.review');
+
+Route::get('/delete/review/{id}','DeleteReview')->name('delete.review');
+
+
+
+});
+
 });
 
 Route::get('/dashboard', function () {
@@ -32,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
     
 });
 

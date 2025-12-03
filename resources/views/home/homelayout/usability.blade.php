@@ -1,33 +1,36 @@
-
 <div class="lonyo-section-padding bg-heading position-relative sectionn">
     <div class="container">
       <div class="row">
         <div class="col-lg-5">
           <div class="lonyo-video-thumb">
-            <img src="assets/images/v1/video-thumb.png" alt="">
+            <img src="{{ asset('frontend/assets/images/v1/video-thumb.png') }}" alt="">
             <a class="play-btn video-init" href="https://www.youtube.com/watch?v=fgZc7mAYIY8">
-              <img src="assets/images/v1/play-icon.svg" alt="">
+              <img src="{{ asset('frontend/assets/images/v1/play-icon.svg') }}" alt="">
               <div class="waves wave-1"></div>
               <div class="waves wave-2"></div>
               <div class="waves wave-3"></div>
             </a>
           </div>
         </div>
+
         <div class="col-lg-7 d-flex align-items-center">
-          <div class="lonyo-default-content lonyo-video-section pl-50 aos-init aos-animate" data-aos="fade-up" data-aos-duration="500">
+          <div class="lonyo-default-content lonyo-video-section pl-50" data-aos="fade-up" data-aos-duration="500">
             <h2>Its usability is simple and intuitive for users</h2>
-            <p>It's a cloud-based accounting tool ideal for individuals &amp; businesses to easily manage finances, invoices &amp; payroll. Unlock the 3-step path to enhanced financial control. </p>
-            <div class="mt-50 aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
-              <a class="lonyo-default-btn video-btn" href="contact-us.html">Download the app</a>
+            <p>It's a cloud-based accounting tool ideal for individuals &amp; businesses to easily manage finances, invoices &amp; payroll. Unlock the 3-step path to enhanced financial control.</p>
+
+            <div class="mt-50" data-aos="fade-up" data-aos-duration="700">
+              <a class="lonyo-default-btn video-btn" href="{{ url('contact-us') }}">Download the app</a>
             </div>
           </div>
         </div>
       </div>
+
       <div class="row">
+
         <div class="col-xl-4 col-md-6">
-          <div class="lonyo-process-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="500">
+          <div class="lonyo-process-wrap" data-aos="fade-up" data-aos-duration="500">
             <div class="lonyo-process-number">
-              <img src="assets/images/v1/n1.svg" alt="">
+              <img src="{{ asset('frontend/assets/images/v1/n1.svg') }}" alt="">
             </div>
             <div class="lonyo-process-title">
               <h4>Connect Your Accounts</h4>
@@ -37,10 +40,11 @@
             </div>
           </div>
         </div>
+
         <div class="col-xl-4 col-md-6">
-          <div class="lonyo-process-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
+          <div class="lonyo-process-wrap" data-aos="fade-up" data-aos-duration="700">
             <div class="lonyo-process-number">
-              <img src="assets/images/v1/n2.svg" alt="">
+              <img src="{{ asset('frontend/assets/images/v1/n2.svg') }}" alt="">
             </div>
             <div class="lonyo-process-title">
               <h4>Set Budgets &amp; Goals</h4>
@@ -50,10 +54,11 @@
             </div>
           </div>
         </div>
+
         <div class="col-xl-4 col-md-6">
-          <div class="lonyo-process-wrap aos-init aos-animate" data-aos="fade-up" data-aos-duration="900">
+          <div class="lonyo-process-wrap" data-aos="fade-up" data-aos-duration="900">
             <div class="lonyo-process-number">
-              <img src="assets/images/v1/n3.svg" alt="">
+              <img src="{{ asset('frontend/assets/images/v1/n3.svg') }}" alt="">
             </div>
             <div class="lonyo-process-title">
               <h4>Monitor &amp; Automate</h4>
@@ -63,7 +68,8 @@
             </div>
           </div>
         </div>
-        <div class="border-bottom aos-init aos-animate" data-aos="fade-up" data-aos-duration="500"></div>
+
+        <div class="border-bottom" data-aos="fade-up" data-aos-duration="500"></div>
       </div>
     </div>
-  </div>
+</div>
