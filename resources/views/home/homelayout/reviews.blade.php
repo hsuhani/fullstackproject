@@ -1,10 +1,19 @@
+<div class="lonyo-content-shape1">
+    <img src="{{asset('backend/assets/images/shape/shape3.svg')}}" alt="">
+  </div>
 <div class="lonyo-section-padding position-relative overflow-hidden">
     <div class="container">
 
+
         <div class="lonyo-section-title">
             <div class="row">
+            @php
+            $title= App\Models\Title::find(1);
+
+            @endphp
                 <div class="col-xl-8 col-lg-8">
-                    <h2>Don't take our word for it, check user reviews</h2>
+                    <h2 id="review-title" contenteditable="{{auth()->check()?'true':'false'}}" 
+                    data-id="{{$title->id}}" >{{$title->reviews}}</h2>
                 </div>
 
                 <div class="col-xl-4 col-lg-4 d-flex align-items-center justify-content-end">
@@ -44,9 +53,49 @@
             </div>
         </div>
     @endforeach
+</div>
 
-       
-    </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
 
-    <div class="lonyo-t-overlay2">
-        <img src="{{ asset('frontend/assets/images/v2/overlay
+    const titleElement = document.getElementById("review-title");
+
+    function saveChanges(element) {
+        let reviewId = element.dataset.id;   
+        let field = element.id === "review-title" ? "reviews" : "";
+        let newValue = element.innerText.trim();
+
+        fetch(`/edit-reviews/${reviewId}`, {    
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ [field]: newValue })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log(`${field} updated successfully`);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    // auto save on Enter
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            saveChanges(e.target);
+        }
+    });
+
+    // auto save on blur
+    titleElement.addEventListener("blur", function() {
+        saveChanges(titleElement);
+    });
+
+});
+</script>

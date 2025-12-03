@@ -63,21 +63,38 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#feature" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> ALL FEATURES </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="feature">
+                        <ul class="nav-second-level">
+                            
+                            <li>
+                                <a href="{{route('all.feature')}}" class="tp-link">ALL FEATURES</a>
+                            </li>
+                            <li>
+                                <a href="{{route('add.feature')}}" class="tp-link">ADD FEATURES</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#sidebarError" data-bs-toggle="collapse">
                         <i data-feather="alert-octagon"></i>
-                        <span> Error Pages </span>
+                        <span> SLIDER SETUP </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarError">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="error-404.html" class="tp-link">Error 404</a>
+                                <a href="{{route('get.slider')}}" class="tp-link">GET SLIDER</a>
                             </li>
-                            <li>
-                                <a href="error-500.html" class="tp-link">Error 500</a>
-                            </li>
+                            
                             
                         </ul>
                     </div>
