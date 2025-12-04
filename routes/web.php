@@ -86,6 +86,26 @@ Route::get('/delete/feature/{id}','DeleteFeature')->name('delete.feature');
 
 
 });
+Route::controller(HomeController::class)->group(function(){
+Route::get('/get/clarifies','GetClarifies')->name('get.clarifies');
+
+Route::get('/edit/clarify/{id}','EditClarify')->name('edit.clarify');
+
+Route::post('/update/clarify','UpdateClarify')->name('update.clarify');
+Route::get('/delete/clarify/{id}','DeleteClarify')->name('delete.clarify');
+
+Route::get('/getall', [HomeController::class, 'ShowGetall'])->name('get.all');
+Route::post('/update-getall', [HomeController::class, 'UpdateGetall'])->name('update.getall');
+
+
+
+
+
+
+
+
+
+});
 
 
 });

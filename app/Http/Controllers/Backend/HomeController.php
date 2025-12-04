@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Feature;
+use App\Models\Clarify;
+use App\Models\GetTab;
+use App\Models\Getall;
 
 class HomeController extends Controller
 {
@@ -62,4 +65,137 @@ class HomeController extends Controller
 
         return redirect()->back()->with($notification);
     }
+ // Show Clarify section
+public function GetClarifies(){
+    $clarify = Clarify::find(1); // fetch the Clarify model instance
+    return view('admin.backend.clarify.get_clarify', compact('clarify'));
+}
+
+// Update Clarify section
+public function EditClarify($id){
+        $clarify = Clarify::find($id);
+        return view('admin.backend.feature.edit_feature', compact('clarify'));
+    }
+
+    
+    
+public function UpdateClarify(Request $request){
+
+    $clarify = Clarify::find($request->id); // FIXED
+
+    if(!$clarify){
+        return redirect()->back()->with([
+            'message' => 'Clarify not found!',
+            'alert-type' => 'error'
+        ]);
+    }
+
+    if($request->file('image')){
+
+        $image = $request->file('image');
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('upload/get_clarify/'), $name_gen);
+
+        // delete old image
+        if($clarify->image && file_exists(public_path($clarify->image))){
+            @unlink(public_path($clarify->image));
+        }
+
+        $clarify->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => 'upload/get_clarify/'.$name_gen,
+        ]);
+
+    } else {
+
+        $clarify->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+    }
+
+    return redirect()->back()->with([
+        'message' => 'Clarify updated successfully',
+        'alert-type' => 'success'
+    ]);
+}
+
+
+    
+    // Show Getall section
+public function ShowGetall(){
+    $getall = Getall::find(1); 
+    return view('admin.backend.getall.get_all', compact('getall'));
+}
+
+// Update Getall section
+public function UpdateGetall(Request $request){
+
+    // Fetch the main Getall section (parent)
+    $getall = Getall::find(1); 
+    $getall_id = $getall->id;
+
+    // If a new image is uploaded
+    if($request->file('image')){
+        $image = $request->file('image');
+
+        // ----- COMMENTED GD / INTERVENTION (Same style as Clarify) -----
+        // $manager = new ImageManager(Driver::class);
+        // $name_gen = hexadec(uniqid()).'.'.$image->getClientOriginalExtension();
+        // $img = $manager->read($image);
+        // $img->resize(306,618)->save(public_path('upload/getall/'.$name_gen));
+        // $save_url = 'upload/getall/'.$name_gen;
+        // ---------------------------------------------------------------
+
+        // TEMPORARY FALLBACK: Upload image normally
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('upload/getall/'), $name_gen);
+
+        // Delete previous image if exists
+        if(file_exists(public_path($getall->image))){
+            @unlink(public_path($getall->image));
+        }
+
+        // New image save path
+        $save_url = 'upload/getall/'.$name_gen;
+
+        // Update with image
+        Getall::find($getall_id)->update([
+            'title'=> $request->title,
+            'description'=> $request->description,
+            'image'=> $save_url,
+        ]);
+
+        // Notification
+        $notification = [
+            'message' => 'Getall updated successfully with image',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
+
+    // If NO image uploaded
+    else{
+
+        Getall::find($getall_id)->update([
+            'title'=> $request->title,
+            'description'=> $request->description,
+        ]);
+
+        // Notification
+        $notification = [
+            'message' => 'Getall updated successfully without image',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
+}
+
+
+    
+    
+
 }

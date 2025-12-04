@@ -64,41 +64,58 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#feature" data-bs-toggle="collapse">
+                    <a href="#side" data-bs-toggle="collapse">
                         <i data-feather="users"></i>
-                        <span> ALL FEATURES </span>
+                        <span> ALL FEATURE </span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="feature">
+                    <div class="collapse" id="side">
                         <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('all.feature')}}" class="tp-link">ALL FEATURE</a>
+                            </li>
+                            <li>
+                                <a href="{{route('add.feature')}}" class="tp-link">ADD RFEATURE</a>
+                            </li>
                             
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#sid" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> CLARIFY SETUP </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sid">
+                        <ul class="nav-second-level">
                             <li>
-                                <a href="{{route('all.feature')}}" class="tp-link">ALL FEATURES</a>
+                                <a href="{{route('get.clarifies')}}" class="tp-link">ALL CLARIFY</a>
                             </li>
+                           
+                            
+                        </ul>
+                    </div>
+                </li>
+                  <li>
+                    <a href="#sd" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> GETALL SETUP </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sd">
+                        <ul class="nav-second-level">
                             <li>
-                                <a href="{{route('add.feature')}}" class="tp-link">ADD FEATURES</a>
+                                <a href="{{route('get.all')}}" class="tp-link">ALL </a>
                             </li>
+                           
                             
                         </ul>
                     </div>
                 </li>
 
-                <li>
-                    <a href="#sidebarError" data-bs-toggle="collapse">
-                        <i data-feather="alert-octagon"></i>
-                        <span> SLIDER SETUP </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarError">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{route('get.slider')}}" class="tp-link">GET SLIDER</a>
-                            </li>
-                            
-                            
-                        </ul>
-                    </div>
-                </li>
+
+                
 
                 
 
