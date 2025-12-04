@@ -60,7 +60,7 @@ Route::post('/edit-slider/{id}','EditSlider');
 
 Route::post('/edit-features/{id}','EditFeatures');
 
-Route::post('/edit-review/{id}','EditReviews');
+Route::post('/edit-reviews/{id}','EditReviews');
 Route::post('/edit-answer/{id}','EditAnswer');
 
 

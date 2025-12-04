@@ -27,6 +27,7 @@
 
                 <div class="lonyo-service-data">
                     <p>{{ $item->description }}</p>
+                    
                 </div>
 
             </div>
