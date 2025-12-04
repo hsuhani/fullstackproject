@@ -8,6 +8,10 @@ use App\Models\Feature;
 use App\Models\Clarify;
 use App\Models\GetTab;
 use App\Models\Getall;
+use App\Models\Usability;
+
+use App\Models\Connect;
+
 
 class HomeController extends Controller
 {
@@ -130,72 +134,141 @@ public function ShowGetall(){
 }
 
 // Update Getall section
-public function UpdateGetall(Request $request){
 
-    // Fetch the main Getall section (parent)
-    $getall = Getall::find(1); 
-    $getall_id = $getall->id;
+public function GetUsability(){
+    $usability = Usability::find(1); // fetch the Clarify model instance
+    return view('admin.backend.usability.get_usability', compact('usability'));
+}
+public function UpdateUsability(Request $request){
 
-    // If a new image is uploaded
+    $usabi_id=$request->id;
+    $usability = Usability::find($usabi_id); 
+
+    if(!$usability){
+        return redirect()->back()->with([
+            'message' => ' not found!',
+            'alert-type' => 'error'
+        ]);
+    }
+
     if($request->file('image')){
+
         $image = $request->file('image');
-
-        // ----- COMMENTED GD / INTERVENTION (Same style as Clarify) -----
-        // $manager = new ImageManager(Driver::class);
-        // $name_gen = hexadec(uniqid()).'.'.$image->getClientOriginalExtension();
-        // $img = $manager->read($image);
-        // $img->resize(306,618)->save(public_path('upload/getall/'.$name_gen));
-        // $save_url = 'upload/getall/'.$name_gen;
-        // ---------------------------------------------------------------
-
-        // TEMPORARY FALLBACK: Upload image normally
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('upload/getall/'), $name_gen);
+        $image->move(public_path('upload/get_usability/'), $name_gen);
 
-        // Delete previous image if exists
-        if(file_exists(public_path($getall->image))){
-            @unlink(public_path($getall->image));
+        // delete old image
+        if($usability->image && file_exists(public_path($usability->image))){
+            @unlink(public_path($usability->image));
         }
 
-        // New image save path
-        $save_url = 'upload/getall/'.$name_gen;
-
-        // Update with image
-        Getall::find($getall_id)->update([
-            'title'=> $request->title,
-            'description'=> $request->description,
-            'image'=> $save_url,
+        $usability->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'youtubelink' => $request->youtubelink,
+            'link' => $request->link,
+            'image' => 'upload/get_clarify/'.$name_gen,
         ]);
-
-        // Notification
         $notification = [
-            'message' => 'Getall updated successfully with image',
-            'alert-type' => 'success'
-        ];
+                'message' => ' updatedsuccessfully with image',
+                'alert-type' => 'success'
+            ];
 
-        return redirect()->back()->with($notification);
+            return redirect()->route('all.review')->with($notification);
+
+    } else {
+
+        $usability->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'youtubelink' => $request->youtubelink,
+            'link' => $request->link,
+        ]);
     }
 
-    // If NO image uploaded
-    else{
+    return redirect()->back()->with([
+        'message' => ' updated successfully without image',
+        'alert-type' => 'success'
+        
+    ]);
+}
+public function AllConnect(){
+        $connect= Connect::latest()->get();
+        return view('admin.backend.connect.all_connect',compact('connect'));
+    }
 
-        Getall::find($getall_id)->update([
+public function AddConnect(){
+        $connect= Connect::latest()->get();
+        return view('admin.backend.connect.add_connect',compact('connect'));
+    }   
+public function StoreConnect(Request $request){
+        Connect::create([
             'title'=> $request->title,
+    
             'description'=> $request->description,
         ]);
 
-        // Notification
-        $notification = [
-            'message' => 'Getall updated successfully without image',
+        $notification = array(
+            'message' => 'conect inserted successfully',
             'alert-type' => 'success'
-        ];
+        );
+
+        return redirect()->route('all.connect')->with($notification);
+    }
+public function EditConnect($id){
+        $connect = Connect::find($id);
+        return view('admin.backend.connect.edit_connect', compact('connect'));
+    }
+public function UpdateConnect(Request $request){
+
+    $connect = Connect::find($request->id); // FIXED
+
+    if(! $connect){
+        return redirect()->back()->with([
+            'message' => 'Clarify not found!',
+            'alert-type' => 'error'
+        ]);
+    }
+
+    
+
+        $connect->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            
+        ]);
+
+
+    $notification = [
+                'message' => ' updatedsuccessfully',
+                'alert-type' => 'success'
+            ];
+
+            return redirect()->route('all.connect')->with($notification);
+        }
+    
+
+public function DeleteConnect($id){
+        Connect::find($id)->delete();
+        $notification = array(
+            'message' => ' deleted successfully',
+            'alert-type' => 'success'
+        );
 
         return redirect()->back()->with($notification);
-    }
+}
+public function UpdateConnect(Request $request, $id)
+{
+    $connect = Connect::findOrFail($id);
+
+    $connect->update([
+        'title' => $request->input('title'),
+        'description' => $request->input('description')
+    ]);
+
+    return response()->json(['success' => true]);
 }
 
 
-    
-    
-
 }
+
