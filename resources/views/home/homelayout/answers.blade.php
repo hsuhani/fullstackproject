@@ -9,15 +9,20 @@
                 {{ $title->answer}}
             </h2>
       </div>
+      @php 
+       $faq=App\Models\Faq::latest()->limit(5)->get();
+      @endphp
       <div class="lonyo-faq-shape"></div>
       <div class="lonyo-faq-wrap1">
       
       
       
-
+        @foreach ( $faq as $item)
+        
+        
           <div class="lonyo-faq-item" data-aos="fade-up" data-aos-duration="900">
               <div class="lonyo-faq-header">
-                  <h4>Is my financial data safe and secure?</h4>
+                  <h4>{{$item->title}}</h4>
                   <div class="lonyo-active-icon">
                                     <img class="plasicon" src="{{ asset('frontend/assets/images/v1/mynus.svg') }}" alt="">
                                     <img class="mynusicon" src="{{ asset('frontend/assets/images/v1/plas.svg') }}" alt="">
@@ -25,13 +30,13 @@
               </div>
               <div class="lonyo-faq-body">
                   <p>
-                      <p>heyyyyy</p>
+                      <p>{{$item->description}}</p>
                   </p>
                   
               </div>
           </div>
           
-          
+        @endforeach
     
          
       </div>

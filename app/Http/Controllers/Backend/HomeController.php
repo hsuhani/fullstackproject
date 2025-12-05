@@ -8,6 +8,8 @@ use App\Models\Feature;
 use App\Models\Clarify;
 use App\Models\GetTab;
 use App\Models\Getall;
+use App\Models\Connect;
+use App\Models\Faq;
 
 class HomeController extends Controller
 {
@@ -193,10 +195,69 @@ public function UpdateGetall(Request $request){
         return redirect()->back()->with($notification);
     }
 }
+   public function UpdateConnect(Request $request, $id)
+{
+    $connect = Connect::findOrFail($id);
 
+    // Correct array syntax: separate strings for each field
+    $connect->update($request->only(['title', 'description']));
 
+    return response()->json([
+        'success' => true,
+        'message' => 'updated successfully'
+    ]);
+}
 
+public function AllFaq(){
+        $faq= Faq::latest()->get();
+        return view('admin.backend.faq.all_faq',compact('faq'));
+    }
     
-    
+public function AddFaq(){
+    return view('admin.backend.faq.add_faq');
+}
+public function StoreFaq(Request $request){
+        Faq::create([
+            'title'=> $request->title,
+            
+            'description'=> $request-> description,
+        ]);
 
+        $notification = array(
+            'message' => 'Faq inserted successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.faq')->with($notification);
+    }
+public function EditFaq($id){
+        $faq = Faq::find($id);
+        return view('admin.backend.faq.edit_faq', compact('faq'));
+    }
+
+public function UpdateFaq(Request $request){
+        $faq = $request->id;
+
+        Faq::find($faq)->update([
+            'title'=> $request->title,
+            
+            'description'=> $request->description,
+        ]);
+
+        $notification = array(
+            'message' => 'faq updated successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.faq')->with($notification);
+    }
+    public function DeleteFaq($id){
+        Faq::find($id)->delete();
+        $notification = array(
+            'message' => ' deleted successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
 }

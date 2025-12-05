@@ -117,19 +117,8 @@ class SliderController extends Controller
         $title->save();
         return response()->json(['success'=>true]);
     }
-    
-    public function UpdateConnect(Request $request, $id)
-{
-    $connect = Connect::findOrFail($id);
 
-    // Correct array syntax: separate strings for each field
-    $connect->update($request->only(['title', 'description']));
-
-    return response()->json([
-        'success' => true,
-        'message' => 'updated successfully'
-    ]);
-}
+ 
 
 
 }
