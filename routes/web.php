@@ -67,6 +67,7 @@ Route::post('/edit-answer/{id}','EditAnswer');
 
 
 
+
 });
 Route::controller(HomeController::class)->group(function(){
 Route::get('/get/feature','AllFeature')->name('all.feature');
@@ -98,29 +99,16 @@ Route::get('/getall', [HomeController::class, 'ShowGetall'])->name('get.all');
 Route::post('/update-getall', [HomeController::class, 'UpdateGetall'])->name('update.getall');
 
 
-
-});
-
-Route::controller(HomeController::class)->group(function(){
-Route::get('/get/usability','GetUsability')->name('get.usability');
-
-Route::post('/update/usability','UpdateUsability')->name('update.usability');
-
-
 });
 Route::controller(HomeController::class)->group(function(){
 Route::get('/all/connect','AllConnect')->name('all.connect');
-
 Route::get('/add/connect','AddConnect')->name('add.connect');
 Route::post('/store/connect','StoreConnect')->name('store.connect');
 
-Route::get('/edit/connect/{id}','EditConnect')->name('edit.connect');
-
-Route::post('/update/connect','UpdateConnect')->name('update.connect');
-
-Route::get('/delete/connect/{id}','DeleteConnect')->name('delete.connect');
-
 Route::post('/update-connect/{id}','UpdateConnect');
+
+
+});
 
 
 });
@@ -136,7 +124,6 @@ Route::middleware('auth')->group(function () {
     
     
 });
-});
 
 
 Route::get('/verify', [AdminController::class, 'ShowVerification'])->name('custom.verification.form');
@@ -145,4 +132,3 @@ Route::post('/verify', [AdminController::class, 'VerificationVerify'])->name('cu
 
 
 require __DIR__.'/auth.php';
-

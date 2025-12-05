@@ -8,7 +8,7 @@
             <div class="col-lg-5">
                 <div class="lonyo-video-thumb">
                     <img src="{{ asset('frontend/assets/images/v1/video-thumb.png') }}" alt="">
-                    <a class="play-btn video-init" href="{{ $usability->youtubelink }}">
+                    <a class="play-btn video-init" href="{{ $usability->youtubelink ?? '#' }}">
                         <img src="{{ asset($usability->youtube) }}" alt="">
                         <div class="waves wave-1"></div>
                         <div class="waves wave-2"></div>
@@ -31,7 +31,6 @@
 
         @php
             $connect = App\Models\Connect::whereIn('id',[1,2,3,4])->get()->keyBy('id');
-
         @endphp
 
         <div class="row">
@@ -43,12 +42,19 @@
                         </div>
 
                         <div class="lonyo-process-title">
-                            <h4 class="editable-title" contenteditable="{{auth()->check()?'true':'false'}}" data-id="{{$item->id}}" class="hero-title">{{$item->title}}
-                   </h4>
+                            <h4 class="editable-title hero-title" 
+                                contenteditable="{{auth()->check()?'true':'false'}}" 
+                                data-id="{{$item->id}}">
+                                {{$item->title}}
+                            </h4>
                         </div>
 
                         <div class="lonyo-process-data">
-                            <p class="editable-description" contenteditable="{{auth()->check()?'true':'false'}}" data-id="{{$item->id}}" class="hero-title">{{$item->description}}</p>
+                            <p class="editable-description hero-title"
+                               contenteditable="{{auth()->check()?'true':'false'}}"
+                               data-id="{{$item->id}}">
+                                {{$item->description}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -59,16 +65,21 @@
 
     </div>
 </div>
-<!-- //CSRF token// -->
+
+<!-- CSRF token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
     function saveChanges(element) {
+        if (!element) return;
         let connectId = element.dataset.id;
+        if (!connectId) return;
+
         let field = element.classList.contains("editable-title") ? "title" : "description";
         let newValue = element.innerText.trim();
+        if (!newValue) return;
 
         fetch(`/update-connect/${connectId}`, {
             method: "POST",
@@ -87,15 +98,16 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error("Error:", error));
     }
 
-    // Auto-save on Enter
+    // Auto save on Enter for editable elements only
     document.addEventListener("keydown", function(e) {
-        if (e.key === "Enter") {
+        if ((e.target.classList.contains("editable-title") || e.target.classList.contains("editable-description")) 
+            && e.key === "Enter") {
             e.preventDefault();
-            saveChanges(e.target);
+            e.target.blur(); // trigger blur and save
         }
     });
 
-    // Auto-save on blur
+    // Auto save on blur
     document.querySelectorAll(".editable-title, .editable-description").forEach(el => {
         el.addEventListener("blur", function() {
             saveChanges(el);
